@@ -1,5 +1,15 @@
 from django import forms
 from django.contrib.auth.models import User
+from products.models import Product
+
+class PostForm(forms.ModelForm):
+
+    class Meta:
+        model = Product
+        fields = ('user', 'title', 'description', 'active', 'docfile', 'quantity','address', 'zip_Code', 'date_created', 'date_Update', 'expire_date', )
+
+
+
 class DocumentForm(forms.Form):
     docfile = forms.FileField(
         label='Select image',

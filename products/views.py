@@ -8,6 +8,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.utils import timezone
 # Custom Imports
+from .forms import PostForm
 
 #from .forms import VariationInventoryForm
 from .models import Product, Variation
@@ -271,17 +272,17 @@ def post_detail_list(request, pk):
 def post_edit_list(request, pk):
     post = get_object_or_404(Product, pk=pk)
     if request.method == "POST":
-        #form = PostForm(request.POST, instance=post)
-        form = DocumentForm(request.POST, request.FILES, instance = post )
+        form = PostForm(request.POST, instance=post)
+        #form = DocumentForm(request.POST, request.FILES, instance = post )
         if form.is_valid():
-            newdoc = Product(user = request.user, title = request.POST['title'], docfile = request.FILES['docfile'], active = request.POST['active'], quantity = request.POST['quantity'], zip_Code = request.POST['zip_Code'], address = request.POST['address'], date_created = request.POST['date_created'],date_Update = request.POST['date_Update'], expire_date = request.POST['expire_date'])
-            newdoc.save()
+            #newdoc = Product(user = request.user, title = request.POST['title'], docfile = request.FILES['docfile'], active = request.POST['active'], quantity = request.POST['quantity'], zip_Code = request.POST['zip_Code'], address = request.POST['address'], date_created = request.POST['date_created'],date_Update = request.POST['date_Update'], expire_date = request.POST['expire_date'])
+            post.save()
             
-            return redirect('products.views.post_detail_list', pk=newdoc.pk)
+            return redirect('products.views.post_detail_list', pk=post.pk)
     else:
         #form = PostForm(instance=post)
-        form = DocumentForm()
-    return render(request, 'products/list.html', {'form': form})
+        form = PostForm(instance=post)
+    return render(request, 'products/post_edit.html', {'form': form})
     
     
     
